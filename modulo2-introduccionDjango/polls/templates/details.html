@@ -1,0 +1,20 @@
+<h1>{{question.questionTest}}</h1>
+
+{% if error_message %}
+  <p>
+    <strong>
+      {{error_message}}
+    </strong>
+  </p>
+{% endif %}
+
+<form action="{% url 'vote' question.id %}" method="POST">
+  <!--con obj1.obj2_set tenemos la lista de todos los obj2 que
+  estan relacionados con obj1 mediante clave foranea-->
+  {% csrf_token %}
+  {%for choice in question.choice_set.all %}
+    <input type='radio' name='choice' id='{{ forloop.counter }}' value='{{ choice.id}}'>
+    <label for='{{ forloop.counter }}'> {{ choice.choiceText }} </label>
+  {% endfor %}
+  <input type='submit' value='Votar'>
+</form>
